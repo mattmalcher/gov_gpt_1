@@ -1,9 +1,20 @@
 import openai
 
+import govgpt.text_proc
+
 # list models
 __models__ = openai.Model.list()
 
 __model_id__ = [model.id for model in __models__.data]
+
+
+def text_from_response(response):
+
+    text = response.choices[0].text
+
+    cleantext = govgpt.text_proc.clean_response(text)
+
+    return cleantext
 
 
 def summarise_question(question, model="text-curie-001"):
@@ -15,11 +26,11 @@ def summarise_question(question, model="text-curie-001"):
     
     response = openai.Completion.create(
         model=model,
-        prompt= f"""Summarize the key topics in the following question:
+        prompt= f"""Summarize the topics in the following question:
         #####
         {question}
         #####
-        The key topics in this question are:
+        The three most important topics in this question are:
         """,
         temperature=0.7,
         max_tokens=100,
@@ -29,3 +40,5 @@ def summarise_question(question, model="text-curie-001"):
     )
 
     return response
+
+

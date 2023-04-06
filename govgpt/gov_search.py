@@ -28,7 +28,9 @@ def search_gov_uk_with_content(query):
          } 
 
     response = requests.get(search_url, params=params)
-    print(response.request.url)
+
+    print(f"\nSearch API Query: {response.request.url}\n")
+
     if response.status_code == 200:
         results = response.json()["results"]
         content = []
@@ -36,7 +38,12 @@ def search_gov_uk_with_content(query):
         for r in results:
 
             try:
-                content.append(r["indexable_content"])
+                content.append(
+                    {
+                    "page" : r["_id"],
+                    "content" : r["indexable_content"]
+                    }
+                )
             except:
                 continue
 
