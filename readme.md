@@ -9,14 +9,13 @@ As a starting point, I have previously worked with the gov.uk search and content
 
 # Context
 
-Matt Upson (former GDS) has built something similar here:
+Matt Upson (former GDS I think?) has built something similar here:
 https://medium.com/mantisnlp/chatgpt-for-gov-uk-c6f232dae7d
 
 It doesnt say how they have anchored responses to gov.uk, but I doubt they have fine tuned or re-trained an LLM.
 
-The Bing blog has a few hints 
+The Bing blog has a few hints, talking about how their 'Prometheus' orchestrator brings together search and chatgpt.
 https://blogs.bing.com/search-quality-insights/february-2023/Building-the-New-Bing
-
 
 
 # Goal
@@ -25,12 +24,16 @@ Make a web app, where the user can ask a question about UK government related to
 
 # Approach
 
+## Proposal
 * get question from user
 * take question and extract topic to use as search term
 * hit gov.uk/search and get back related content
 * structure the content into a prompt. In the context of {content}, please answer {user question}
 * return answer to user.
 
+## Alternatives
+
+* openai have an example of using a document library to answer questions, they preprocess the document library first and use vector similarity to identify relevant content
 
 # What about Local LLMs?
 
@@ -42,9 +45,11 @@ The approach proposed requires quite long prompts - thousands of tokens, because
 
 I can get results on the order of 2-5 tokens per second, this means that processing the prompts takes too long (10s of minutes). This makes it hard to develop, iterate on and use the code with a local LLM.
 
-As such, the approach for now will be to use the openAI APIs. They provide 5$ of free credit, and 
+As such, the approach for now will be to use the openAI APIs. They provide 5$ of free credit, and have the ability to set a hard limit, lets see how far we can get with a few quid!
 
 
-# OpenAI APIs
+# Extension Ideas
 
-## Links
+Things that have occured to me, but are distractions from doing an MVP:
+
+* Validate / threshold search result relevants by generating vectors and checking for similarity to question?
