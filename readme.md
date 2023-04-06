@@ -31,9 +31,38 @@ Make a web app, where the user can ask a question about UK government related to
 * structure the content into a prompt. In the context of {content}, please answer {user question}
 * return answer to user.
 
+
+## Sticking points
+
+While it seems possible to extract the relevant topics from the questions, searching these on gov.uk seems really hit & miss. You get some content which is relevant, but it might be 1/5 documents.
+
+If you were to then put the content of the 4/5 unrelated documents into the prompt I imagine it could be somewhat distracting for the LLM.
+
+I expect that to get good results you need to do some extra steps to ensure the context you are filling the prompt up with is relevant.
+
 ## Alternatives
 
+### Custom Search
+* maybe you could create a custom google search for gov.uk 
+    * https://developers.google.com/custom-search/v1/overview 
+    * https://fogine.dev/blog/how-to-programmatically-get-google-search-results/ 
+
+### Vector Similarity
 * openai have an example of using a document library to answer questions, they preprocess the document library first and use vector similarity to identify relevant content
+
+If you were to pick a big area, say Tax, how much content is there on gov.uk that you would need to generate embeddings for?
+
+HMRC has 90k pages of content: 
+
+```sh
+curl -s "https://www.gov.uk/api/search.json?count=0&filter_any_organisations=hm-revenue-customs&fields=id,indexable_content" | jq '.total'
+```
+
+To get that content using the content API @ half the rate limit would be (90,000/5)/3600 = 5 hours, which is managable.
+
+You could use a simple local model for embeddings rather than making calls to the openai embeddings API.
+
+I think you would want to generate vector per paragraph or something.
 
 # What about Local LLMs?
 

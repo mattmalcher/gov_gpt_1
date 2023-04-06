@@ -4,6 +4,8 @@ A really key factor in getting good results is knowing how to prompt the model y
 
 I'm going to collect useful prompt examples here.
 
+Also: https://www.promptingguide.ai/
+
 
 ## Handling Uncertainty
 
