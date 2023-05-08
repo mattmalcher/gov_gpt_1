@@ -26,3 +26,12 @@ https://www.api.gov.uk/gds/gov-uk-content/#gov-uk-content
 
 Overall docs:
 https://content-api.publishing.service.gov.uk/#gov-uk-content-api
+
+Content Schemas:
+https://github.com/alphagov/publishing-api/tree/main/content_schemas
+
+
+
+# How to get content to generate embeddings from?
+
+The 

@@ -14,8 +14,24 @@ https://medium.com/mantisnlp/chatgpt-for-gov-uk-c6f232dae7d
 
 It doesnt say how they have anchored responses to gov.uk, but I doubt they have fine tuned or re-trained an LLM.
 
+Someone has also had a go at an HMRC guidance chatbot
+https://www.reddit.com/r/TheCivilService/comments/1352zq7/chatgpt_for_hmrc_guidelines/
+https://github.com/alexgriffithsdev/chat-hmrc-explained
+
+
 The Bing blog has a few hints, talking about how their 'Prometheus' orchestrator brings together search and chatgpt.
 https://blogs.bing.com/search-quality-insights/february-2023/Building-the-New-Bing
+
+## Semantic Kernel
+Stumbled on this MS thing which looks something like their langchain / orchestrator thing
+
+https://learn.microsoft.com/en-us/semantic-kernel/whatissk
+
+Enjoyed this:
+> You, or your boss, have noticed that ChatGPT has gotten a lot of attention. 	
+> There's a big push to do something similar with LLM AI in your app ... asap.
+> You quickly learn that making AI tell a joke is easy. Everything else isn't.
+> Rather than waste time on LLM AI itself, you want to work on your app instead.
 
 
 # Goal
