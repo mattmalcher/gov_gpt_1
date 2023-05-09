@@ -1,6 +1,8 @@
 import logging
 logger = logging.getLogger(__name__)
 
+from datetime import datetime
+from time import sleep 
 import copy
 
 from requests import HTTPError, Session, Request
@@ -107,10 +109,19 @@ def execute_search(req:Request):
     return resp.json()
 
 
-def page_query(chunk_size = 100):
+def page_query(chunk_size = 100, date_filt:datetime = None, rps = 1, limit = 1000):
+
+    pause_time = 1/rps
+    
+    filter_dict = {
+        "any_organisations":"hm-revenue-customs"
+        }
+    
+    if date_filt:
+        filter_dict.update({"updated_at" : f"from:{ date_filt.date() }"})
 
     initial_query = add_page_params(
-        req = build_search(query=None, fields=None, filters= {"any_organisations":"hm-revenue-customs"}),
+        req = build_search(query = None, fields = None, filters = filter_dict),
         start = 0,  
         count = 0,  
         order= None
@@ -127,40 +138,28 @@ def page_query(chunk_size = 100):
             "updated_at",
             "public_timestamp"
             ],
-            filters= {"any_organisations":"hm-revenue-customs"}
+            filters= filter_dict
             )
 
+    results = []
 
     for i in range(0, total, chunk_size):
 
+        if i > limit:
+            return results
+        
         range_query = add_page_params(req = query, start = i, count = chunk_size )
         
+        logger.debug(f"retrieving results page, {i} / {total}")
         res = execute_search(range_query)
 
-        """
-        add to database?
-        """
+        results.extend(res['results'])
 
-    return 
+        sleep(pause_time)
 
-    
+    return results
 
-#results = page_query()
-
-
-"""
-a = search_build()
-
-b1 = paginate(a, 1, 4)
-b2 = paginate(a, 2, 4)
-
-c1 = search_execute(b1)
-c2 = search_execute(b2)
-
-d1 = c1["results"]
-d2 = c2["results"]
-"""
-
-
-
-"done"
+def chunks(list:list, n:int = 10):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(list), n):
+        yield list[i:i + n]

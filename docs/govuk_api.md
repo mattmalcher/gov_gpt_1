@@ -10,11 +10,14 @@ https://www.api.gov.uk/gds/gov-uk-search/#gov-uk-search
 Overall docs:
 https://docs.publishing.service.gov.uk/repos/search-api.html
 
-The useful one (shows you how to pick fields & filter results):
+**The useful one** (shows you how to pick fields & filter results):
 https://docs.publishing.service.gov.uk/repos/search-api/using-the-search-api.html
 
 Searchable fields:
 https://github.com/alphagov/search-api/blob/main/config/schema/field_definitions.json
+
+Blog that shows how to filter date fields
+https://dataingovernment.blog.gov.uk/2016/05/26/use-the-search-api-to-get-useful-information-about-gov-uk-content/
 
 
 # Content API

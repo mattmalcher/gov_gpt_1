@@ -9,6 +9,8 @@ Things I think I want to store in this database
 import logging
 logger = logging.getLogger(__name__)
 
+from datetime import datetime
+
 from sqlalchemy import create_engine, text
 
 from sqlalchemy import String, BigInteger, DateTime
@@ -40,8 +42,8 @@ class Page(Base):
     link: Mapped[str] = mapped_column(String(), primary_key=True)
     format: Mapped[str] = mapped_column(String())
     content: Mapped[str] = mapped_column(String())
-    updated_at: Mapped[str] = mapped_column(DateTime())
-    public_timestamp: Mapped[str] = mapped_column(DateTime())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    public_timestamp: Mapped[datetime] = mapped_column(DateTime(timezone=True))
    
 
     def __repr__(self) -> str:
