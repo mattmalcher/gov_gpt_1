@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger(__name__)
+
 import openai
 
 import govgpt.text_proc
