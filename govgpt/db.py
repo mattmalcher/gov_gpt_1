@@ -3,10 +3,7 @@ Things I think I want to store in this database
 
 1. Pages - This is data about pages
 
-2. Chunks - tbc. I think our embeddings will be at a sub-page level, so we will want a table of these chunks of text.
-
-3. Embeddings
-
+2. Chunks & Embeddings - I think our embeddings will be at a sub-page level, so we will want a table of these chunks of text.
 
 """
 import logging
@@ -14,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 from sqlalchemy import create_engine, text
 
-from sqlalchemy import String, Integer, DateTime
+from sqlalchemy import String, BigInteger, DateTime
 from sqlalchemy import ForeignKey
 
 from sqlalchemy.orm import DeclarativeBase
@@ -24,7 +21,8 @@ from sqlalchemy.orm import relationship
 
 from pgvector.sqlalchemy import Vector
 
-engine = create_engine('postgresql+psycopg2://postgres:gov_embed@127.0.0.1:54322/govgpt')
+
+engine = create_engine('postgresql+psycopg2://embed_usr:ilovellms@127.0.0.1:54322/embed_db')
 
 connection = engine.connect()
 
@@ -32,11 +30,13 @@ class Base(DeclarativeBase):
     pass
 
 
-class Pages(Base):
+class Page(Base):
     """Pages
     
     """
     __tablename__ = "pages"
+    __table_args__ = {"schema": "embed_schema"}
+
     link: Mapped[str] = mapped_column(String(), primary_key=True)
     format: Mapped[str] = mapped_column(String())
     content: Mapped[str] = mapped_column(String())
@@ -60,9 +60,12 @@ class Embedding(Base):
     """
 
     __tablename__ = "embeddings"
-    text: Mapped[str] = mapped_column(String()) 
+    __table_args__ = {"schema": "embed_schema"}
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    text_chunk: Mapped[str] = mapped_column(String()) 
     embedding: Mapped[str] = mapped_column(Vector(385))
-    link: Mapped[str] = mapped_column(ForeignKey("pages.link"))
+    link: Mapped[str] = mapped_column(ForeignKey("embed_schema.pages.link"))
     
     ## TODO
     # possibly in future for efficiency we want to just store 
@@ -72,7 +75,7 @@ class Embedding(Base):
     def __repr__(self) -> str:
         return f"""Embedding(
             link={self.link!r}, 
-            text={self.text[0:30]!r},
+            text_chunk={self.text_chunk[0:30]!r},
             embedding={self.embedding[0:10]!r}           
         )
         """

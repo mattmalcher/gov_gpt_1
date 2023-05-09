@@ -6,7 +6,15 @@ services:
   db:
     image: ankane/pgvector:v0.4.1
     environment:
-      POSTGRES_PASSWORD: gov_embed
+      # db admin creds - managed by pg image
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin_pw
+
+      # details for an embeddings db, schema, user
+      embed_user: embed_usr
+      embed_user_pw: ilovellms
+      embed_db_name: embed_db
+      embed_schema_name: embed_schema
 
     volumes:
       - type: bind
