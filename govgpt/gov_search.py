@@ -107,7 +107,7 @@ def execute_search(req:Request):
     return resp.json()
 
 
-def page_query():
+def page_query(chunk_size = 100):
 
     initial_query = add_page_params(
         req = build_search(query=None, fields=None, filters= {"any_organisations":"hm-revenue-customs"}),
@@ -118,13 +118,34 @@ def page_query():
 
     total = execute_search(initial_query)["total"]
 
-    
+    query = build_search(
+            query = None, 
+            fields = [
+            "link",
+            "format",
+            "indexable_content",
+            "updated_at",
+            "public_timestamp"
+            ],
+            filters= {"any_organisations":"hm-revenue-customs"}
+            )
+
+
+    for i in range(0, total, chunk_size):
+
+        range_query = add_page_params(req = query, start = i, count = chunk_size )
+        
+        res = execute_search(range_query)
+
+        """
+        add to database?
+        """
 
     return 
 
     
 
-results = page_query()
+#results = page_query()
 
 
 """
