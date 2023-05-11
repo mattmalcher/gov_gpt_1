@@ -106,6 +106,10 @@ store = PGVector(
 
 Vectorstores are classes with methods for creating, updating and searching using the index.
 
+At present the PGVector implementation is hardcoded to use vectors of length 1536 (OpenAI embeddings model Length). See [issue 2219](https://github.com/hwchase17/langchain/issues/2219#issuecomment-1519131019)
+
+If you modify your local version of the package 
+
 
 ## [Retrievers](https://python.langchain.com/en/latest/modules/indexes/retrievers.html)
 
