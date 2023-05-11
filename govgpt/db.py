@@ -59,6 +59,8 @@ class Page(Base):
 class Embedding(Base):
     """Embeddings
 
+    Foreign Keys:
+    - link - so you know which whole document the text chunk is from, for retrieval.
     """
 
     __tablename__ = "embeddings"
@@ -68,6 +70,7 @@ class Embedding(Base):
     text_chunk: Mapped[str] = mapped_column(String()) 
     embedding: Mapped[str] = mapped_column(Vector(385))
     link: Mapped[str] = mapped_column(ForeignKey("embed_schema.pages.link"))
+    updated_at: Mapped[str] = mapped_column(DateTime(timezone=True))
     
     ## TODO
     # possibly in future for efficiency we want to just store 
