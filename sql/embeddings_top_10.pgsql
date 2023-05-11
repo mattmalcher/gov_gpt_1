@@ -1,0 +1,1 @@
+SELECT * from embed_schema.langchain_pg_embedding limit 10

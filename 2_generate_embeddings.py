@@ -3,6 +3,7 @@ import logging.config
 
 from govgpt.text_loader import PGLoader
 from govgpt.embeddings import embeddings
+from govgpt.db import conn_string
 
 from transformers import AutoTokenizer
 from langchain.text_splitter import CharacterTextSplitter
@@ -16,9 +17,17 @@ tokenizer = AutoTokenizer.from_pretrained("models/multi-qa-MiniLM-L6-cos-v1/")
 logger.debug("tokenizer loaded")
 
 logger.debug("initialising PGLoader")
-conn_string = "postgresql://embed_usr:ilovellms@127.0.0.1:54322/embed_db"
+conn_string = "postgresql://" + conn_string
+
+# with open("sql/pages_wo_embeddings.pgsql") as queryfile:
+#     statement = queryfile.read()
+    
+with open("sql/pages_unique_content.pgsql") as queryfile:
+    statement = queryfile.read()
+
+
 loader = PGLoader( 
-    query = "SELECT * FROM pages LIMIT 1000", 
+    query = statement, 
     database = conn_string,
     page_content_columns=["content"],
     metadata_columns=["link", "format", "updated_at", "public_timestamp"]
@@ -52,6 +61,7 @@ db = PGVector.from_documents(
     documents=texts,
     collection_name = "sample_1",
     connection_string = conn_string,
+    #pre_delete_collection=True
 )
 
 "done"

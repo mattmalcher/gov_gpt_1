@@ -23,8 +23,8 @@ from sqlalchemy.orm import relationship
 
 from pgvector.sqlalchemy import Vector
 
-
-engine = create_engine('postgresql+psycopg2://embed_usr:ilovellms@127.0.0.1:54322/embed_db')
+conn_string = "embed_usr:ilovellms@127.0.0.1:54322/embed_db"
+engine = create_engine('postgresql+psycopg2://' + conn_string)
 
 connection = engine.connect()
 

@@ -24,4 +24,4 @@ This has two columns we are very interested in - speed & semantic search perform
 As of time of writing the `multi-qa-MiniLM-L6-cos-v1` model is ranked 4th in accuracy for semantic search applications, but is significantly faster (3x or more) than the top 3 so seems like a good place to start.
 
 
-This model outputs embeddings vectors of length 385 (i.e. 0:384) 
+This model outputs embeddings vectors of length 384.
