@@ -19,10 +19,23 @@ store = PGVector(
 
 retriever = store.as_retriever(
     search_kwargs={
-        "k": 10, 
-        "similarity_score_threshold":0.7
+        "k": 5, 
+        "similarity_score_threshold":0.99
         })
 
-docs = retriever.get_relevant_documents(questions[0]["question"])
+question = questions[2]["question"]
+
+
+sep = "---------------------\n"
+
+print(f"{question}{sep}")
+
+docs = retriever.get_relevant_documents(question)
+
+for count, doc in enumerate(docs):
+    print(f"{sep}Document {count + 1}\n"
+          f"Source: {doc.metadata['link']}\n"
+          f"Length: {len(doc.page_content)}\n"
+          f"{sep}{doc.page_content}")
 
 "done"
