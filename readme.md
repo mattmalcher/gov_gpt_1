@@ -93,8 +93,3 @@ I can get results on the order of 2-5 tokens per second, this means that process
 As such, the approach for now will be to use the openAI APIs. They provide 5$ of free credit, and have the ability to set a hard limit, lets see how far we can get with a few quid!
 
 
-# Extension Ideas
-
-Things that have occured to me, but are distractions from doing an MVP:
-
-* Validate / threshold search result relevants by generating vectors and checking for similarity to question?
