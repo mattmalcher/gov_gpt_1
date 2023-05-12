@@ -6,8 +6,8 @@ logger = logging.getLogger()
 
 from langchain.vectorstores.pgvector import PGVector, DistanceStrategy
 from langchain.llms import OpenAI
-#from langchain.chains import RetrievalQAWithSourcesChain
-from langchain.chains import RetrievalQA
+from langchain.chains import RetrievalQAWithSourcesChain
+#from langchain.chains import RetrievalQA
 
 from govgpt.embeddings import embeddings
 from govgpt.db import conn_string
@@ -29,8 +29,8 @@ retriever = store.as_retriever(
         })
 
 # for sources to work need metadata key called 'source'
-#qa = RetrievalQAWithSourcesChain.from_chain_type(
-qa = RetrievalQA.from_chain_type(
+qa = RetrievalQAWithSourcesChain.from_chain_type(
+#qa = RetrievalQA.from_chain_type(
     llm=OpenAI(
        # model_name="text-curie-001", 
         model_name="text-davinci-003", 
@@ -41,7 +41,8 @@ qa = RetrievalQA.from_chain_type(
     verbose=True
     )
 
-question = questions[0]["question"]
+#question = questions[0]["question"]
+question = "How do I apply for Child Benefit?"
 
 output = qa(question)
 

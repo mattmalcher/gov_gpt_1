@@ -29,7 +29,8 @@ class PGLoader(BaseLoader):
         query: str,
         database: str,
         page_content_columns: Optional[List[str]] = None,
-        metadata_columns: Optional[List[str]] = None,
+        metadata_columns: Optional[List[str]] = None,       
+        rename_dict: Optional[Dict] = None
     ):
         """_summary_
 
@@ -38,11 +39,15 @@ class PGLoader(BaseLoader):
             database (str): A connection string
             page_content_columns (Optional[List[str]], optional): _description_. Defaults to None.
             metadata_columns (Optional[List[str]], optional): _description_. Defaults to None.
+            rename_dict Optional[Dict] = None: A dictionary of {'newname':'oldname'} to rename metadata keys. 
+                Useful if for example you want to rename an item of metadata to a special name picked up 
+                by langchain like 'source'
         """
         self.query = query
         self.database = database
         self.page_content_columns = page_content_columns
         self.metadata_columns = metadata_columns
+        self.rename_dict = rename_dict
     
     def load(self) -> List[Document]:
         try:
@@ -87,6 +92,9 @@ class PGLoader(BaseLoader):
                     column: serialize_fix(result[colnames.index(column)])
                     for column in metadata_columns
                 }
+
+                if self.rename_dict:
+                    metadata = {self.rename_dict.get(k, k): v for k, v in metadata.items()}
 
                 doc = Document(page_content=page_content, metadata=metadata)
                 docs.append(doc)

@@ -34,7 +34,7 @@ docs = retriever.get_relevant_documents(question)
 
 for count, doc in enumerate(docs):
     print(f"{sep}Document {count + 1}\n"
-          f"Source: {doc.metadata['link']}\n"
+          f"Source: {doc.metadata['source']}\n"
           f"Length: {len(doc.page_content)}\n"
           f"{sep}{doc.page_content}")
 

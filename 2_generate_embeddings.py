@@ -24,13 +24,14 @@ conn_string = "postgresql://" + conn_string
     
 with open("sql/pages_unique_content.pgsql") as queryfile:
     statement = queryfile.read()
-
+    #statement = statement + "LIMIT 100"
 
 loader = PGLoader( 
     query = statement, 
     database = conn_string,
-    page_content_columns=["content"],
-    metadata_columns=["link", "format", "updated_at", "public_timestamp"]
+    page_content_columns = ["content"],
+    metadata_columns = ["link", "format", "updated_at", "public_timestamp"],
+    rename_dict = {"link":"source"}
 )
 
 logger.debug("loading documents")
